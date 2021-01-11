@@ -21,5 +21,23 @@ class VendedoresController extends Controller
     	return view('vendedores.show', [
     		'vendedor'=>$vendedor
     	]);
-    }
+	}
+	
+	public function create() {
+		return view('vendedores.create');
+	}
+
+	public function store(Request $request){
+		$novoVendedor=$request->validate([
+			'nome'=>['required','min:3','max:50'],
+			'especialidade'=>['nullable','min:3','max:250'],
+			'email'=>['nullable','min:3','max:250'],
+		]);
+
+		$vendedor = Vendedor::create($novoVendedor);
+
+		return redirect()->route('vendedores.index', [
+			'id'=>$vendedor->id_vendedor
+		]);
+	}
 }

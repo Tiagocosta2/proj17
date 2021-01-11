@@ -34,7 +34,7 @@
 	<tr>
 		<th scope="row">Produto</th>
 		@foreach($encomenda->produtos as $produto)
-      	<td>{{$produto->designacao}}</td>
+      	<td><a href="{{route('produtos.show', ['id'=>$produto->id_produto])}}">{{$produto->designacao}}</td>
       	@endforeach
 	</tr>
 </tbody>

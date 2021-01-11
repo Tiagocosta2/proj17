@@ -21,5 +21,24 @@ class ProdutosController extends Controller
     	return view('produtos.show', [
     		'produto'=>$produto
     	]);
-    }
+	}
+	
+	public function create() {
+		return view('produtos.create');
+	}
+
+	public function store(Request $request){
+		$novoProduto=$request->validate([
+			'designacao'=>['required','min:3','max:50'],
+			'preco'=>['nullable','numeric'],
+			'stock'=>['required','numeric'],
+			'observacoes'=>['nullable','min:3','max:250'],
+		]);
+
+		$produto = Produto::create($novoProduto);
+
+		return redirect()->route('produtos.index', [
+			'id'=>$produto->id_produto
+		]);
+	}
 }

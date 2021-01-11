@@ -57,3 +57,10 @@ Route::post('/vendedores', 'App\Http\Controllers\VendedoresController@store')
 	->name('vendedores.store');
 Route::post('/produtos', 'App\Http\Controllers\ProdutosController@store')
 	->name('produtos.store');
+
+//Edits e Updates
+
+Route::get('/clientes/{id}/edit','App\Http\Controllers\ClientesController@edit')
+	->name('clientes.edit');
+Route::patch('/clientes/{id}','App\Http\Controllers\ClientesController@update')
+\->name('clientes.update');	

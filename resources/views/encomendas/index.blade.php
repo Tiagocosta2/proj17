@@ -8,7 +8,9 @@
 	</thead>
 	<tbody>
 <tr>
+
 @foreach($encomendas as $encomenda)
+
 <th scope="row" style="text-align: center;"><a href="{{route('encomendas.show', ['id'=>$encomenda->id_encomenda])}}">{{$encomenda->data}}</a></th>
 <br>
 @endforeach

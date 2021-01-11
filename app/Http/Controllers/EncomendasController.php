@@ -21,7 +21,8 @@ class EncomendasController extends Controller
     }
     public function show(Request $request) {
     	$idEncomenda= $request->id;
-    	$encomenda = Encomenda::where('id_encomenda', $idEncomenda)->with(['clientes','vendedores','produtos'])->first();
+        $encomenda = Encomenda::where('id_encomenda', $idEncomenda)->with(['clientes','vendedores','produtos'])->first();
+        
     	return view('encomendas.show', [
     		'encomenda'=>$encomenda
     	]);
@@ -55,7 +56,7 @@ class EncomendasController extends Controller
 		]);
         $produto=$request->id_produto;
         $encomenda = Encomenda::create($novoEncomenda);
-        $encomenda->encomendas_produto()->attach($produto);
+        $encomenda->produtos()->attach($produto);
 		return redirect()->route('encomendas.index', [
             'id'=>$encomenda->id_encomenda
 		]);
