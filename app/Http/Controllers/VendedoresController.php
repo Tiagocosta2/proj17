@@ -64,4 +64,19 @@ class VendedoresController extends Controller
 			'id'=>$vendedor->id_vendedor
 		]);
 	}
+	public function delete(Request $request){
+        $idVendedor=$request->id;
+        $vendedor=Vendedor::where('id_vendedor',$idVendedor)->first();
+
+        return view('vendedores.delete',[
+            'vendedor'=>$vendedor
+        ]); 
+    }
+    public function destroy(Request $request){
+        $idVendedor=$request->id;
+        $vendedor=Vendedor::findOrFail($idVendedor);
+        $vendedor->delete();
+
+        return redirect()->route('vendedores.index');
+    }
 }

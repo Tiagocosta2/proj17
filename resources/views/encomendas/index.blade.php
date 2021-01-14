@@ -17,7 +17,9 @@
 </tr>
 </tbody>
 </table>
+@if(Auth::user())
 <button type="button" class="btn btn-outline-primary"><a href="{{route('encomendas.create')}}">Adicionar encomendas</button><br>
+@endif
 @endsection
 <br>
 <form method="post" action="{{route('processar.form')}}">

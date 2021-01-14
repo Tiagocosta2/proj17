@@ -92,4 +92,19 @@ class EncomendasController extends Controller
             'id'=>$encomenda->id_encomenda
         ]);
     }
+    public function delete(Request $request){
+        $idEncomenda=$request->id;
+        $encomenda=Encomenda::where('id_encomenda',$idEncomenda)->first();
+
+        return view('encomendas.delete',[
+            'encomenda'=>$encomenda
+        ]); 
+    }
+    public function destroy(Request $request){
+        $idEncomenda=$request->id;
+        $encomenda=Encomenda::findOrFail($idEncomenda);
+        $encomenda->delete();
+
+        return redirect()->route('encomendas.index');
+    }
 }

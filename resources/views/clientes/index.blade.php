@@ -17,6 +17,7 @@
 </tr>
 </tbody>
 </table>
+@if(Auth::user())
 <button type="button" class="btn btn-outline-primary"><a href="{{route('clientes.create')}}">Adicionar clientes</button><br>
-
+@endif
 @endsection

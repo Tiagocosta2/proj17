@@ -40,5 +40,8 @@
 </tbody>
 </table>
 </div>
+@if(Auth::user())
 <button type="button" class="btn btn-outline-primary"><a href="{{route('encomendas.edit', ['id'=>$encomenda->id_encomenda])}}">Editar</button><br>
+<button type="button" class="btn btn-outline-primary"><a href="{{route('encomendas.delete', ['id'=>$encomenda->id_encomenda])}}">Eliminar</button><br>		
+@endif
 @endsection

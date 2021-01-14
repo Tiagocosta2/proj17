@@ -66,4 +66,19 @@ class ClientesController extends Controller
 			'id'=>$cliente->id_cliente
 		]);
 	}
+	public function delete(Request $request){
+		$idCliente=$request->id;
+		$cliente=Cliente::where('id_cliente',$idCliente)->first();
+
+		return view('clientes.delete',[
+			'cliente'=>$cliente
+		]); 
+	}
+	public function destroy(Request $request){
+		$idCliente=$request->id;
+		$cliente=Cliente::findOrFail($idCliente);
+		$cliente->delete();
+
+		return redirect()->route('clientes.index');
+	}
 }

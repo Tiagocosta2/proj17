@@ -66,4 +66,19 @@ class ProdutosController extends Controller
 			'id'=>$produto->id_produto
 		]);
 	}
+	public function delete(Request $request){
+        $idProduto=$request->id;
+        $produto=Produto::where('id_produto',$idProduto)->first();
+
+        return view('produtos.delete',[
+            'produto'=>$produto
+        ]); 
+    }
+    public function destroy(Request $request){
+        $idProduto=$request->id;
+        $produto=Produto::findOrFail($idProduto);
+        $produto->delete();
+
+        return redirect()->route('produtos.index');
+    }
 }
