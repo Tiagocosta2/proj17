@@ -35,4 +35,5 @@
 	</tbody>
 </table>
 </div>
+<button type="button" class="btn btn-outline-primary"><a href="{{route('produtos.edit', ['id'=>$produto->id_produto])}}">Editar</button><br>
 @endsection

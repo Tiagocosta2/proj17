@@ -40,4 +40,28 @@ class VendedoresController extends Controller
 			'id'=>$vendedor->id_vendedor
 		]);
 	}
+	public function edit(Request $request){
+		$idVendedor=$request->id;
+		$vendedor=Vendedor::where('id_vendedor', $idVendedor)->first();
+
+		return view('vendedores.edit', [
+			'vendedor'=>$vendedor
+		]);
+	}
+	public function update(Request $request){
+		$idVendedor=$request->id;
+		$vendedor=Vendedor::findOrFail($idVendedor);
+
+		$atualizarVendedor=$request->validate([
+			'nome'=>['required','min:3','max:50'],
+			'especialidade'=>['nullable','min:3','max:250'],
+			'email'=>['nullable','min:3','max:250'],
+		]);
+
+		$vendedor->update($atualizarVendedor);
+
+		return redirect()->route('vendedores.show',[
+			'id'=>$vendedor->id_vendedor
+		]);
+	}
 }

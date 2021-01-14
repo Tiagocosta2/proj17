@@ -61,4 +61,35 @@ class EncomendasController extends Controller
             'id'=>$encomenda->id_encomenda
 		]);
 	}
+    public function edit(Request $request){
+        $idEncomenda=$request->id;
+        $clientes=Cliente::all();
+        $vendedores=Vendedor::all();
+        $produtos=Produto::all();
+        $encomenda=Encomenda::where('id_encomenda', $idEncomenda)->first();
+
+        return view('encomendas.edit', [
+            'encomenda'=>$encomenda,
+            'clientes'=>$clientes,
+            'vendedores'=>$vendedores,
+            'produtos'=>$produtos
+        ]);
+    }
+    public function update(Request $request){
+        $idEncomenda=$request->id;
+        $encomenda=Encomenda::findOrFail($idEncomenda);
+
+        $atualizarEncomenda=$request->validate([
+            'id_cliente'=>['numeric','required'],
+            'id_vendedor'=>['nullable','required'],
+            'data'=>['required','date'],
+            'observacoes'=>['nullable','min:3','max:250'],
+        ]);
+
+        $encomenda->update($atualizarEncomenda);
+
+        return redirect()->route('encomendas.show',[
+            'id'=>$encomenda->id_encomenda
+        ]);
+    }
 }

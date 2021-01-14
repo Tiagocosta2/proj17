@@ -21,7 +21,7 @@
 		<th scope="row">Cliente</th>
       	<td>{{$encomenda->clientes->nome}}</td>
 	</tr>
-	@if(isset($encomenda->vendedor->nome))
+	@if(isset($encomenda->vendedores))
 	<tr>
 		<th scope="row">Vendedor</th>
       	<td>{{$encomenda->vendedores->nome}}</td>
@@ -40,4 +40,5 @@
 </tbody>
 </table>
 </div>
+<button type="button" class="btn btn-outline-primary"><a href="{{route('encomendas.edit', ['id'=>$encomenda->id_encomenda])}}">Editar</button><br>
 @endsection

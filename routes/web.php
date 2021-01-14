@@ -63,4 +63,16 @@ Route::post('/produtos', 'App\Http\Controllers\ProdutosController@store')
 Route::get('/clientes/{id}/edit','App\Http\Controllers\ClientesController@edit')
 	->name('clientes.edit');
 Route::patch('/clientes/{id}','App\Http\Controllers\ClientesController@update')
-\->name('clientes.update');	
+	->name('clientes.update');	
+Route::get('/encomendas/{id}/edit','App\Http\Controllers\EncomendasController@edit')
+	->name('encomendas.edit');
+Route::patch('/encomendas/{id}','App\Http\Controllers\EncomendasController@update')
+	->name('encomendas.update');	
+Route::get('/vendedores/{id}/edit','App\Http\Controllers\VendedoresController@edit')
+	->name('vendedores.edit');
+Route::patch('/vendedores/{id}','App\Http\Controllers\VendedoresController@update')
+	->name('vendedores.update');	
+Route::get('/produtos/{id}/edit','App\Http\Controllers\ProdutosController@edit')
+	->name('produtos.edit');
+Route::patch('/produtos/{id}','App\Http\Controllers\ProdutosController@update')
+	->name('produtos.update');		

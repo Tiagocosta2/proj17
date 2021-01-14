@@ -1,3 +1,5 @@
+@extends('layout')
+@section('conteudo')
 <form action="{{route('clientes.update', ['id'=>$cliente->id_cliente])}}" method="post">
 @csrf
 @method('patch')
@@ -23,3 +25,6 @@ Deverá indicar um email correto!<br>
 @endif
 <input type="submit" value="enviar">
 </form>
+<button type="button" class="btn btn-outline-primary"><a href="{{route('clientes.edit', ['id'=>$cliente->id_cliente])}}">Editar</button><br>
+
+@endsection 

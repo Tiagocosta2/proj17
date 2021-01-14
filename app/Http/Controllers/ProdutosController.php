@@ -41,4 +41,29 @@ class ProdutosController extends Controller
 			'id'=>$produto->id_produto
 		]);
 	}
+	public function edit(Request $request){
+		$idProduto=$request->id;
+		$produto=Produto::where('id_produto', $idProduto)->first();
+
+		return view('produtos.edit', [
+			'produto'=>$produto
+		]);
+	}
+	public function update(Request $request){
+		$idProduto=$request->id;
+		$produto=Produto::findOrFail($idProduto);
+
+		$atualizarProduto=$request->validate([
+			'designacao'=>['required','min:3','max:50'],
+			'preco'=>['nullable','numeric'],
+			'stock'=>['required','numeric'],
+			'observacoes'=>['nullable','min:3','max:250'],
+		]);
+
+		$produto->update($atualizarProduto);
+
+		return redirect()->route('produtos.show',[
+			'id'=>$produto->id_produto
+		]);
+	}
 }
