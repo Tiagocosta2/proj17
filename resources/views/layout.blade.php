@@ -19,6 +19,7 @@
       <a class="nav-item nav-link" href="{{route('encomendas.index')}}">Encomendas</a>
       <a class="nav-item nav-link" href="{{route('produtos.index')}}">Produtos</a>
       <a class="nav-item nav-link" href="{{route('vendedores.index')}}">Vendedores</a>
+      @if(auth()->check())
       <a class="dropdown-item" href="{{ route('logout') }}"
          onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
@@ -27,6 +28,7 @@
 
       <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
        @csrf
+       @endif
     </div>
   </div>
 </nav>

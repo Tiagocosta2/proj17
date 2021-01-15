@@ -4,31 +4,51 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cliente;
+use App\Models\Encomenda;
+use Auth;
 
 class ClientesController extends Controller
 {
     //
     public function index() {
-    	$clientes = Cliente::all();
+		if(Auth::Check()){
+			$clientes = Cliente::all();
 
     	return view('clientes.index', [
     		'clientes'=>$clientes
     	]);
+		}
+		else{
+			return redirect()->route('home');
+		}
+    	
     }
     public function show(Request $request) {
-    	$idCliente= $request->id;
+		if(Auth::Check()){
+			$idCliente= $request->id;
     	$cliente = Cliente::where('id_cliente', $idCliente)->with('encomendas')->first();
     	return view('clientes.show', [
     		'cliente'=>$cliente
     	]);
+		}
+		else{
+			return redirect()->route('home');
+		}
+    	
 	}
 	
 	public function create() {
-		return view('clientes.create');
+		if(Auth::Check()){
+			return view('clientes.create');
+		}
+		else{
+			return redirect()->route('home');
+		}
 	}
 
 	public function store(Request $request){
-		$novoCliente=$request->validate([
+		if(Auth::Check()){
+			$novoCliente=$request->validate([
 			'nome'=>['required','min:3','max:50'],
 			'morada'=>['nullable','min:3','max:250'],
 			'telefone'=>['required','min:8','max:13'],
@@ -40,17 +60,29 @@ class ClientesController extends Controller
 		return redirect()->route('clientes.index', [
 			'id'=>$cliente->id_cliente
 		]);
+		}
+		else{
+			return redirect()->route('home');
+		}
+		
 	}
 	public function edit(Request $request){
-		$idCliente=$request->id;
+		if(Auth::Check()){
+			$idCliente=$request->id;
 		$cliente=Cliente::where('id_cliente', $idCliente)->first();
 
 		return view('clientes.edit', [
 			'cliente'=>$cliente
 		]);
+		}
+		else{
+			return redirect()->route('home');
+		}
+		
 	}
 	public function update(Request $request){
-		$idCliente=$request->id;
+		if(Auth::Check()){
+			$idCliente=$request->id;
 		$cliente=Cliente::findOrFail($idCliente);
 
 		$atualizarCliente=$request->validate([
@@ -65,20 +97,36 @@ class ClientesController extends Controller
 		return redirect()->route('clientes.show',[
 			'id'=>$cliente->id_cliente
 		]);
+		}
+		else{
+			return redirect()->route('home');
+		}
+		
 	}
 	public function delete(Request $request){
-		$idCliente=$request->id;
+		if(Auth::Check()){
+			$idCliente=$request->id;
 		$cliente=Cliente::where('id_cliente',$idCliente)->first();
 
 		return view('clientes.delete',[
 			'cliente'=>$cliente
 		]); 
+		}
+		else{
+			return redirect()->route('home');
+		}
 	}
 	public function destroy(Request $request){
-		$idCliente=$request->id;
+		if(Auth::Check()){
+			$idCliente=$request->id;
 		$cliente=Cliente::findOrFail($idCliente);
 		$cliente->delete();
 
 		return redirect()->route('clientes.index');
+		}
+		else{
+			return redirect()->route('home');
+		}
+		
 	}
 }

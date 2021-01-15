@@ -8,24 +8,37 @@ use App\Models\Cliente;
 use App\Models\Vendedor;
 use App\Models\Produto;
 use App\Models\EncomendaProduto;
+use Auth;
 
 class EncomendasController extends Controller
 {
     //
     public function index() {
-    	$encomendas = Encomenda::all();
+        if(Auth::Check()){
+            $encomendas = Encomenda::all();
 
     	return view('encomendas.index', [
     		'encomendas'=>$encomendas
     	]);
+        }
+        else{
+            return redirect()->route('home');
+        }
+    	
     }
     public function show(Request $request) {
-    	$idEncomenda= $request->id;
+        if(Auth::Check()){
+            $idEncomenda= $request->id;
         $encomenda = Encomenda::where('id_encomenda', $idEncomenda)->with(['clientes','vendedores','produtos'])->first();
         
     	return view('encomendas.show', [
     		'encomenda'=>$encomenda
     	]);
+        }
+        else{
+            return redirect()->route('home');
+        }
+    	
     }
     public function mostrar (Request $request){
         $caixa = $request->caixa;
@@ -36,8 +49,8 @@ class EncomendasController extends Controller
     }
 
     public function create() {
-
-        $clientes=Cliente::all();
+        if(Auth::Check()){
+             $clientes=Cliente::all();
         $vendedores=Vendedor::all();
         $produtos=Produto::all();
 		return view('encomendas.create', [
@@ -45,10 +58,16 @@ class EncomendasController extends Controller
             'vendedores'=>$vendedores,
             'produtos'=>$produtos
         ]);
+        }
+        else{
+            return redirect()->route('home');
+        }
+       
 	}
 
 	public function store(Request $request){
-		$novoEncomenda=$request->validate([
+        if(Auth::Check()){
+           $novoEncomenda=$request->validate([
 			'id_cliente'=>['numeric','required'],
 			'id_vendedor'=>['nullable','required'],
 			'data'=>['required','date'],
@@ -59,10 +78,16 @@ class EncomendasController extends Controller
         $encomenda->produtos()->attach($produto);
 		return redirect()->route('encomendas.index', [
             'id'=>$encomenda->id_encomenda
-		]);
+		]); 
+        }
+        else{
+            return redirect()->route('home');
+        }
+		
 	}
     public function edit(Request $request){
-        $idEncomenda=$request->id;
+        if(Auth::Check()){
+             $idEncomenda=$request->id;
         $clientes=Cliente::all();
         $vendedores=Vendedor::all();
         $produtos=Produto::all();
@@ -74,9 +99,15 @@ class EncomendasController extends Controller
             'vendedores'=>$vendedores,
             'produtos'=>$produtos
         ]);
+        }
+        else{
+            return redirect()->route('home');
+        }
+       
     }
     public function update(Request $request){
-        $idEncomenda=$request->id;
+        if(Auth::Check()){
+            $idEncomenda=$request->id;
         $encomenda=Encomenda::findOrFail($idEncomenda);
 
         $atualizarEncomenda=$request->validate([
@@ -91,20 +122,37 @@ class EncomendasController extends Controller
         return redirect()->route('encomendas.show',[
             'id'=>$encomenda->id_encomenda
         ]);
+        }
+        else{
+            return redirect()->route('home');
+        }
+        
     }
     public function delete(Request $request){
-        $idEncomenda=$request->id;
+        if(Auth::Check()){
+            $idEncomenda=$request->id;
         $encomenda=Encomenda::where('id_encomenda',$idEncomenda)->first();
 
         return view('encomendas.delete',[
             'encomenda'=>$encomenda
         ]); 
+        }
+        else{
+            return redirect()->route('home');
+        }
+        
     }
     public function destroy(Request $request){
-        $idEncomenda=$request->id;
+        if(Auth::Check()){
+            $idEncomenda=$request->id;
         $encomenda=Encomenda::findOrFail($idEncomenda);
         $encomenda->delete();
 
         return redirect()->route('encomendas.index');
+        }
+        else{
+            return redirect()->route('home');
+        }
+        
     }
 }
