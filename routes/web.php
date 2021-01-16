@@ -99,3 +99,5 @@ Route::delete('/produtos', 'App\Http\Controllers\ProdutosController@destroy')
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+

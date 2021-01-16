@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Produto;
 use Auth;
 
@@ -36,16 +38,16 @@ class ProdutosController extends Controller
 	}
 	
 	public function create() {
-		if(Auth::Check()){
+		if(Gate::allows('admin')){
 			return view('produtos.create');
 		}
 		else{
-			return redirect()->route('home');
+			return redirect()->route('produtos.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
 		}
 	}
 
 	public function store(Request $request){
-		if(Auth::Check()){
+		if(Gate::allows('admin')){
 			$novoProduto=$request->validate([
 			'designacao'=>['required','min:3','max:50'],
 			'preco'=>['nullable','numeric'],
@@ -60,26 +62,25 @@ class ProdutosController extends Controller
 		]);
 		}
 		else{
-			return redirect()->route('home');
+			return redirect()->route('produtos.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
 		}
 		
 	}
 	public function edit(Request $request){
-		if(Auth::Check()){
-			$idProduto=$request->id;
+		$idProduto=$request->id;
 		$produto=Produto::where('id_produto', $idProduto)->first();
-
+		if(GAte::allows('admin')){
 		return view('produtos.edit', [
 			'produto'=>$produto
 		]);
 		}
 		else{
-			return redirect()->route('home');
+			return redirect()->route('produtos.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
 		}
 		
 	}
 	public function update(Request $request){
-		if(Auth::Check()){
+		if(Gate::allows('admin')){
 			$idProduto=$request->id;
 		$produto=Produto::findOrFail($idProduto);
 
@@ -97,12 +98,12 @@ class ProdutosController extends Controller
 		]);
 		}
 		else{
-			return redirect()->route('home');
+			return redirect()->route('produtos.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
 		}
 		
 	}
 	public function delete(Request $request){
-		if(Auth::Check()){
+		if(Gate::allows('admin')){
 			$idProduto=$request->id;
         $produto=Produto::where('id_produto',$idProduto)->first();
 
@@ -111,12 +112,12 @@ class ProdutosController extends Controller
         ]); 
 		}
 		else{
-			return redirect()->route('home');
+			return redirect()->route('produtos.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
 		}
         
     }
     public function destroy(Request $request){
-		if(Auth::Check()){
+		if(Gate::allows('admin')){
 			 $idProduto=$request->id;
         $produto=Produto::findOrFail($idProduto);
         $produto->delete();
@@ -124,7 +125,7 @@ class ProdutosController extends Controller
         return redirect()->route('produtos.index');
 		}
 		else{
-			return redirect()->route('home');
+			return redirect()->route('produtos.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
 		}
        
     }

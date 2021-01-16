@@ -15,11 +15,12 @@ class Cliente extends Model
         'nome',
         'morada',
         'telefone',
-        'email'
+        'email',
+        'imagem'
     ];
 
     public function encomendas() {
     	return $this->hasMany('App\Models\Encomenda', 'id_cliente');
     }
 
-}
+}   

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Encomenda;
 use App\Models\Cliente;
 use App\Models\Vendedor;
@@ -49,7 +51,7 @@ class EncomendasController extends Controller
     }
 
     public function create() {
-        if(Auth::Check()){
+        if(Gate::allows('admin')){
              $clientes=Cliente::all();
         $vendedores=Vendedor::all();
         $produtos=Produto::all();
@@ -60,13 +62,13 @@ class EncomendasController extends Controller
         ]);
         }
         else{
-            return redirect()->route('home');
+            return redirect()->route('encomendas.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
         }
        
 	}
 
 	public function store(Request $request){
-        if(Auth::Check()){
+        if(Gate::allows('admin')){
            $novoEncomenda=$request->validate([
 			'id_cliente'=>['numeric','required'],
 			'id_vendedor'=>['nullable','required'],
@@ -81,17 +83,17 @@ class EncomendasController extends Controller
 		]); 
         }
         else{
-            return redirect()->route('home');
+            return redirect()->route('encomendas.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
         }
 		
 	}
     public function edit(Request $request){
-        if(Auth::Check()){
-             $idEncomenda=$request->id;
+        $idEncomenda=$request->id;
         $clientes=Cliente::all();
         $vendedores=Vendedor::all();
         $produtos=Produto::all();
         $encomenda=Encomenda::where('id_encomenda', $idEncomenda)->first();
+        if(Gate::allows('admin')){
 
         return view('encomendas.edit', [
             'encomenda'=>$encomenda,
@@ -101,12 +103,12 @@ class EncomendasController extends Controller
         ]);
         }
         else{
-            return redirect()->route('home');
+            return redirect()->route('encomendas.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
         }
        
     }
     public function update(Request $request){
-        if(Auth::Check()){
+        if(Gate::allows('admin')){
             $idEncomenda=$request->id;
         $encomenda=Encomenda::findOrFail($idEncomenda);
 
@@ -124,12 +126,12 @@ class EncomendasController extends Controller
         ]);
         }
         else{
-            return redirect()->route('home');
+            return redirect()->route('encomendas.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
         }
         
     }
     public function delete(Request $request){
-        if(Auth::Check()){
+        if(Gate::allows('admin')){
             $idEncomenda=$request->id;
         $encomenda=Encomenda::where('id_encomenda',$idEncomenda)->first();
 
@@ -138,12 +140,12 @@ class EncomendasController extends Controller
         ]); 
         }
         else{
-            return redirect()->route('home');
+            return redirect()->route('encomendas.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
         }
         
     }
     public function destroy(Request $request){
-        if(Auth::Check()){
+        if(Gate::allows('admin')){
             $idEncomenda=$request->id;
         $encomenda=Encomenda::findOrFail($idEncomenda);
         $encomenda->delete();
@@ -151,7 +153,7 @@ class EncomendasController extends Controller
         return redirect()->route('encomendas.index');
         }
         else{
-            return redirect()->route('home');
+            return redirect()->route('encomendas.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
         }
         
     }

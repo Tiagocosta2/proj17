@@ -38,8 +38,16 @@
       <td>{{$encomenda->data}}</td>
 	@endforeach
 </tr>
+
 </tbody>
 </table>
+Imagem:<br>
+@if(isset($cliente->imagem))
+<img src="{{asset('imagens/clientes/'.$cliente->imagem)}}">
+@endif
+<br>
+
+
 </div>
 @if(Auth::user())
 <button type="button" class="btn btn-outline-primary"><a href="{{route('clientes.edit', ['id'=>$cliente->id_cliente])}}">Editar</button><br>

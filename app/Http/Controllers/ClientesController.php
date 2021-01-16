@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Cliente;
 use App\Models\Encomenda;
 use Auth;
+
 
 class ClientesController extends Controller
 {
@@ -38,22 +41,31 @@ class ClientesController extends Controller
 	}
 	
 	public function create() {
-		if(Auth::Check()){
+		if(Gate::allows('admin')){
 			return view('clientes.create');
 		}
 		else{
-			return redirect()->route('home');
+			return redirect()->route('clientes.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
 		}
 	}
 
 	public function store(Request $request){
-		if(Auth::Check()){
+		if(Gate::allows('admin')){
 			$novoCliente=$request->validate([
 			'nome'=>['required','min:3','max:50'],
 			'morada'=>['nullable','min:3','max:250'],
 			'telefone'=>['required','min:8','max:13'],
 			'email'=>['nullable','min:3','max:250'],
+			'imagem'=>['image','nullable','max:2000'],
 		]);
+		if($request->hasFile('imagem')){
+            $nomeImagem=$request->file('imagem')->getClientOriginalName();
+
+            $nomeImagem=time().'_'.$nomeImagem;
+            $guardarImagem=$request->file('imagem')->storeAs('imagens/clientes',$nomeImagem);
+
+            $novoCliente['imagem']=$nomeImagem;
+        }	
 
 		$cliente = Cliente::create($novoCliente);
 
@@ -62,35 +74,46 @@ class ClientesController extends Controller
 		]);
 		}
 		else{
-			return redirect()->route('home');
+			return redirect()->route('clientes.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
 		}
 		
 	}
 	public function edit(Request $request){
-		if(Auth::Check()){
-			$idCliente=$request->id;
+		$idCliente=$request->id;
 		$cliente=Cliente::where('id_cliente', $idCliente)->first();
-
+		if(Gate::allows('admin')){
 		return view('clientes.edit', [
 			'cliente'=>$cliente
 		]);
 		}
 		else{
-			return redirect()->route('home');
+			return redirect()->route('clientes.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
 		}
 		
 	}
 	public function update(Request $request){
-		if(Auth::Check()){
+		if(Gate::allows('admin')){
 			$idCliente=$request->id;
 		$cliente=Cliente::findOrFail($idCliente);
-
+		$imagemAntiga=$cliente->imagem;
 		$atualizarCliente=$request->validate([
 			'nome'=>['required','min:3','max:50'],
 			'morada'=>['nullable','min:3','max:250'],
 			'telefone'=>['required','min:8','max:13'],
 			'email'=>['nullable','min:3','max:250'],
+			'imagem'=>['image','nullable','max:2000'],
 		]);
+		if($request->hasFile('imagem')){
+            $nomeImagem=$request->file('imagem')->getClientOriginalName();
+
+            $nomeImagem=time().'_'.$nomeImagem;
+            $guardarImagem=$request->file('imagem')->storeAs('imagens/clientes',$nomeImagem);
+
+                if(!is_null($imagemAntiga)){
+                    Storage::Delete('imagens/clientes/'.$imagemAntiga);
+                }
+            $atualizarCliente['imagem']=$nomeImagem;
+        } 
 
 		$cliente->update($atualizarCliente);
 
@@ -99,12 +122,12 @@ class ClientesController extends Controller
 		]);
 		}
 		else{
-			return redirect()->route('home');
+			return redirect()->route('clientes.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
 		}
 		
 	}
 	public function delete(Request $request){
-		if(Auth::Check()){
+		if(Gate::allows('admin')){
 			$idCliente=$request->id;
 		$cliente=Cliente::where('id_cliente',$idCliente)->first();
 
@@ -113,11 +136,11 @@ class ClientesController extends Controller
 		]); 
 		}
 		else{
-			return redirect()->route('home');
+			return redirect()->route('clientes.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
 		}
 	}
 	public function destroy(Request $request){
-		if(Auth::Check()){
+		if(Gate::allows('admin')){
 			$idCliente=$request->id;
 		$cliente=Cliente::findOrFail($idCliente);
 		$cliente->delete();
@@ -125,8 +148,10 @@ class ClientesController extends Controller
 		return redirect()->route('clientes.index');
 		}
 		else{
-			return redirect()->route('home');
+			return redirect()->route('clientes.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
 		}
 		
 	}
+
+
 }

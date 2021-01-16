@@ -33,6 +33,12 @@
 		</tbody>
 </table>
 </div>
+Imagem:<br>
+@if(isset($vendedor->imagem))
+<img src="{{asset('imagens/vendedores/'.$vendedor->imagem)}}">
+@endif
+<br>
+<br>
 @if(Auth::user())
 <button type="button" class="btn btn-outline-primary"><a href="{{route('vendedores.edit', ['id'=>$vendedor->id_vendedor])}}">Editar</button><br>
 <button type="button" class="btn btn-outline-primary"><a href="{{route('vendedores.delete', ['id'=>$vendedor->id_vendedor])}}">Eliminar</button><br>	

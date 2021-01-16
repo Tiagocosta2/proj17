@@ -14,7 +14,8 @@ class Vendedor extends Model
     protected $fillable = [
         'nome',
         'especialidade',
-        'email'
+        'email',
+        'imagem'
     ];
 
     public function encomendas() {

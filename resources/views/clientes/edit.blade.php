@@ -1,6 +1,6 @@
 @extends('layout')
 @section('conteudo')
-<form action="{{route('clientes.update', ['id'=>$cliente->id_cliente])}}" method="post">
+<form action="{{route('clientes.update', ['id'=>$cliente->id_cliente])}}" enctype="multipart/form-data" method="post">
 @csrf
 @method('patch')
 
@@ -23,8 +23,12 @@ Email: <input type="text" name="email" value="{{$cliente->email}}"><br>
 @if($errors->has('email'))
 Deverá indicar um email correto!<br>
 @endif
+
+Imagem : <input type="file" name="imagem" value="{{$cliente->imagem}}"><br>
+@if ( $errors->has('imagem') )
+Deverá indicar uma imagem correta<br>
+@endif
 <input type="submit" value="enviar">
 </form>
-<button type="button" class="btn btn-outline-primary"><a href="{{route('clientes.edit', ['id'=>$cliente->id_cliente])}}">Editar</button><br>
 
 @endsection 
