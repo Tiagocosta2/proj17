@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16-Jan-2021 às 15:49
+-- Tempo de geração: 17-Jan-2021 às 16:48
 -- Versão do servidor: 10.4.14-MariaDB
 -- versão do PHP: 7.3.23
 
@@ -47,8 +47,7 @@ INSERT INTO `clientes` (`id_cliente`, `nome`, `morada`, `telefone`, `email`, `up
 (2, 'Antonio Pereira', 'Rua Nuno Alveres', '913334442', 'apereira@gmail.com', '2020-11-05 00:00:00', '2020-11-05 00:00:00', ''),
 (3, 'Rafael Ferreira', 'Rua Vasco da gama', '913346665', 'rferreira@gmail.com', '2020-11-05 00:00:00', '2020-11-05 00:00:00', ''),
 (4, 'João Manuel', 'Rua da ponte', '918976253', 'jmanuel@gmail.com', '2020-11-05 00:00:00', '2020-11-05 00:00:00', ''),
-(5, 'Inês Fonseca', 'Rua António Palha', '913678925', 'ifonseca@gmail.com', '2020-11-05 00:00:00', '2020-11-05 00:00:00', ''),
-(7, 'João', 'Rua', '9677567575', 'drabid.st@gmail.com', '2021-01-16 14:06:48', '2021-01-16 14:04:10', '1610806008_transferir.jpg');
+(5, 'Inês Fonseca', 'Rua António Palha', '913678925', 'ifonseca@gmail.com', '2020-11-05 00:00:00', '2020-11-05 00:00:00', '');
 
 -- --------------------------------------------------------
 
@@ -73,7 +72,7 @@ CREATE TABLE `encomendas` (
 INSERT INTO `encomendas` (`id_encomenda`, `id_cliente`, `id_vendedor`, `data`, `observacoes`, `updated_at`, `created_at`) VALUES
 (1, 1, 1, '2020-12-02', 'Entregar durante a tarde.', '2020-12-02 00:00:00', '2020-12-02 00:00:00'),
 (2, 1, 2, '2020-12-03', NULL, '2020-12-31 00:00:00', '2020-12-31 00:00:00'),
-(3, 1, 4, '2020-12-23', NULL, '2021-01-14 09:47:12', '2020-12-31 00:00:00');
+(3, 1, 1, '2020-12-23', NULL, '2021-01-17 15:38:48', '2020-12-31 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -194,8 +193,7 @@ INSERT INTO `vendedores` (`id_vendedor`, `nome`, `especialidade`, `email`, `upda
 (2, 'Noé Silva', 'Informática', 'nsilva@gmail.com', '2020-11-05 00:00:00', '2020-11-05 00:00:00', ''),
 (3, 'Luís Gomes', 'eletromecanica', 'lgomes', '2020-11-05 00:00:00', '2020-11-05 00:00:00', ''),
 (4, 'António Filipe', 'Medicina', 'afilipe@gmail.com', '2020-11-05 00:00:00', '2020-11-05 00:00:00', ''),
-(5, 'Tiago Machado', 'Bicicleta', 'tmachado@gmail.com', '2021-01-14 10:15:09', '2020-11-05 00:00:00', ''),
-(8, 'Tiago', 'rede', 'tiagofilipegoncalves.tc@gmail.com', '2021-01-16 14:07:54', '2021-01-16 13:51:57', '1610806074_transferir 2.jpg');
+(5, 'Tiago Machado', 'Bicicleta', 'tmachado@gmail.com', '2021-01-14 10:15:09', '2020-11-05 00:00:00', '');
 
 --
 -- Índices para tabelas despejadas
@@ -251,7 +249,7 @@ ALTER TABLE `vendedores`
 -- AUTO_INCREMENT de tabela `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `encomendas`
@@ -275,7 +273,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `users`

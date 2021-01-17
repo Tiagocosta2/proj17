@@ -68,7 +68,7 @@ class VendedoresController extends Controller
 
 		return redirect()->route('vendedores.index', [
 			'id'=>$vendedor->id_vendedor
-		]);
+		])->with('mensagem2','Vendedor criado');
 		}
 		else{
 			return redirect()->route('vendedores.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
@@ -115,7 +115,7 @@ class VendedoresController extends Controller
 
 		return redirect()->route('vendedores.show',[
 			'id'=>$vendedor->id_vendedor
-		]);
+		])->with('mensagem2','Vendedor editado');
 		}
 		else{
 			return redirect()->route('vendedores.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');		}
@@ -141,7 +141,7 @@ class VendedoresController extends Controller
         $vendedor=Vendedor::findOrFail($idVendedor);
         $vendedor->delete();
 
-        return redirect()->route('vendedores.index');
+        return redirect()->route('vendedores.index')->with('mensagem2','Vendedor Eliminado');
 		}
 		else{
 			return redirect()->route('vendedores.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');

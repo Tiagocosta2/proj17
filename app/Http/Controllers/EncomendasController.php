@@ -80,7 +80,7 @@ class EncomendasController extends Controller
         $encomenda->produtos()->attach($produto);
 		return redirect()->route('encomendas.index', [
             'id'=>$encomenda->id_encomenda
-		]); 
+		])->with('mensagem2','Encomenda criada'); 
         }
         else{
             return redirect()->route('encomendas.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
@@ -123,7 +123,7 @@ class EncomendasController extends Controller
 
         return redirect()->route('encomendas.show',[
             'id'=>$encomenda->id_encomenda
-        ]);
+        ])->with('mensagem2','Encomenda editada');
         }
         else{
             return redirect()->route('encomendas.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
@@ -150,7 +150,7 @@ class EncomendasController extends Controller
         $encomenda=Encomenda::findOrFail($idEncomenda);
         $encomenda->delete();
 
-        return redirect()->route('encomendas.index');
+        return redirect()->route('encomendas.index')->with('mensagem2','Encomenda Eliminada');
         }
         else{
             return redirect()->route('encomendas.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');

@@ -59,7 +59,7 @@ class ProdutosController extends Controller
 
 		return redirect()->route('produtos.index', [
 			'id'=>$produto->id_produto
-		]);
+		])->with('mensagem2','Produto criado');
 		}
 		else{
 			return redirect()->route('produtos.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
@@ -95,7 +95,7 @@ class ProdutosController extends Controller
 
 		return redirect()->route('produtos.show',[
 			'id'=>$produto->id_produto
-		]);
+		])->with('mensagem2','Produto editado');
 		}
 		else{
 			return redirect()->route('produtos.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
@@ -122,7 +122,7 @@ class ProdutosController extends Controller
         $produto=Produto::findOrFail($idProduto);
         $produto->delete();
 
-        return redirect()->route('produtos.index');
+        return redirect()->route('produtos.index')->with('mensagem2','Produto Eliminado');
 		}
 		else{
 			return redirect()->route('produtos.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');

@@ -71,7 +71,7 @@ class ClientesController extends Controller
 
 		return redirect()->route('clientes.index', [
 			'id'=>$cliente->id_cliente
-		]);
+		])->with('mensagem2','Cliente criado');
 		}
 		else{
 			return redirect()->route('clientes.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
@@ -119,7 +119,7 @@ class ClientesController extends Controller
 
 		return redirect()->route('clientes.show',[
 			'id'=>$cliente->id_cliente
-		]);
+		])->with('mensagem2','Cliente editado');
 		}
 		else{
 			return redirect()->route('clientes.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
@@ -145,7 +145,7 @@ class ClientesController extends Controller
 		$cliente=Cliente::findOrFail($idCliente);
 		$cliente->delete();
 
-		return redirect()->route('clientes.index');
+		return redirect()->route('clientes.index')->with('mensagem2','Cliente Eliminado');
 		}
 		else{
 			return redirect()->route('clientes.index')->with('mensagem1','Erro não tem permissoes para entrar nesta area');
